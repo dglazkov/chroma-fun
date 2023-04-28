@@ -7,11 +7,11 @@ from dotenv import load_dotenv
 load_dotenv()
 client = chromadb.Client()
 
-openai_embedding = embedding_functions.GooglePalmEmbeddingFunction(
+palm_embedding = embedding_functions.GooglePalmEmbeddingFunction(
     api_key=os.getenv("API_KEY"))
 
 collection = client.create_collection(
-    "all-my-documents", embedding_function=openai_embedding)
+    "all-my-documents", embedding_function=palm_embedding)
 
 collection.add(
     documents=["This is document1", "This is document2"],
