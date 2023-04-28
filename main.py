@@ -1,8 +1,17 @@
-import chromadb
+import os
 
+import chromadb
+from chromadb.utils import embedding_functions
+from dotenv import load_dotenv
+
+load_dotenv()
 client = chromadb.Client()
 
-collection = client.create_collection("all-my-documents")
+openai_embedding = embedding_functions.GooglePalmEmbeddingFunction(
+    api_key=os.getenv("API_KEY"))
+
+collection = client.create_collection(
+    "all-my-documents", embedding_function=openai_embedding)
 
 collection.add(
     documents=["This is document1", "This is document2"],
@@ -14,6 +23,7 @@ collection.add(
 results = collection.query(
     query_texts=["This is a query document"],
     n_results=2,
+
     # where={"metadata_field": "is_equal_to_this"}, # optional filter
     # where_document={"$contains":"search_string"}  # optional filter
 )
