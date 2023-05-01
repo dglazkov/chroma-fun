@@ -8,7 +8,7 @@ load_dotenv()
 client = chromadb.Client()
 
 palm_embedding = embedding_functions.GooglePalmEmbeddingFunction(
-    api_key=os.getenv("API_KEY"))
+    api_key=os.getenv("API_KEY"), model_name="models/embedding-gecko-001")
 
 collection = client.create_collection(
     "all-my-documents", embedding_function=palm_embedding)
